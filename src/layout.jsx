@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Sidebar from './constants/Sidbar';
+import Sidebar from './constants/Sidebar';
 import Footer from './components/Footer';
 import { useThemeStore } from './store/store';
 
