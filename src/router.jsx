@@ -1,43 +1,76 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from './layout';
-import Home from './pages/Home';
-import Expenses from './pages/Expenses';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import { createBrowserRouter } from "react-router-dom";
+
+import Layout from "./layout";
+
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import AddExpense from "./pages/AddExpense";
+import Expenses from "./pages/Expenses";
+import Analytics from "./pages/Analytics";
+import Budget from "./pages/Budget";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import LoginSuccess from "./pages/LoginSuccess";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/login-success",
+    element: <LoginSuccess />,
+  },
+  {
+    path: "/",
     element: <Layout />,
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
       },
       {
-        path: 'expenses',
-        element: <Expenses />
+        path: "add-expense",
+        element: <AddExpense />,
       },
       {
-        path: 'about',
-        element: <About />
+        path: "expenses",
+        element: <Expenses />,
       },
       {
-        path: 'contact',
-        element: <Contact />
+        path: "analytics",
+        element: <Analytics />,
       },
       {
-        path: 'login',
-        element: <Login />
+        path: "budget",
+        element: <Budget />,
       },
       {
-        path: 'register',
-        element: <Register />
-      }
-    ]
-  }
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+    ],
+  },
 ]);
 
 export default router;
