@@ -1,47 +1,55 @@
+import { NavLink } from "react-router-dom";
 import { useUiStore } from "../store/store";
 
 function Sidebar() {
-  // Zustand store se state aur toggle function nikal liya
   const { isSidebarOpen, toggleSidebar } = useUiStore();
 
   const menuItems = [
-    { name: "Dashboard", icon: "📊" },
-    { name: "Analytics", icon: "📈" },
-    { name: "History", icon: "📜" },
-    { name: "Settings", icon: "⚙️" },
+    { name: "Dashboard", icon: "🏠", path: "/dashboard" },
+    { name: "Add Expense", icon: "➕", path: "/dashboard/add-expense" },
+    { name: "Expenses", icon: "📑", path: "/dashboard/expenses" },
+    { name: "Analytics", icon: "📊", path: "/dashboard/analytics" },
+    { name: "Budget", icon: "💰", path: "/dashboard/budget" },
+    { name: "Profile", icon: "👤", path: "/dashboard/profile" },
+    { name: "Settings", icon: "⚙️", path: "/dashboard/settings" },
   ];
 
-  // Agar sidebar closed hai toh mobile/laptop par classes badalengi
   return (
     <aside
-      className={`fixed md:sticky top-0 left-0 z-40 bg-slate-900 text-slate-200 p-5 flex flex-col h-screen border-r border-slate-800 transition-all duration-300
-        ${isSidebarOpen ? "w-64 translate-x-0" : "w-0 -translate-x-full md:w-20 md:translate-x-0"}`}
+      className={`fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-slate-800 bg-slate-900 p-5 text-slate-200 transition-all duration-300 ${
+        isSidebarOpen ? "w-64 translate-x-0" : "w-0 -translate-x-full md:w-20 md:translate-x-0"
+      }`}
     >
-      {/* Top Header: Logo + Toggle Button */}
-      <div className="flex items-center justify-between mb-8">
-        <h2 className={`text-xl font-black text-emerald-400 tracking-wider flex items-center gap-2 ${!isSidebarOpen && "md:hidden"}`}>
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className={`flex items-center gap-2 text-xl font-black tracking-wider text-emerald-400 ${!isSidebarOpen && "md:hidden"}`}>
           <span>💼</span> Menu
         </h2>
-        {/* Burger / Cross Button Jo Sidebar Ko Band Karega */}
         <button
           onClick={toggleSidebar}
-          className="text-slate-400 hover:text-white bg-slate-800 p-2 rounded-lg text-sm"
+          className="rounded-lg bg-slate-800 p-2 text-sm text-slate-400 transition hover:text-white"
         >
           {isSidebarOpen ? "◀" : "▶"}
         </button>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex flex-col gap-2 w-full">
-        {menuItems.map((item, index) => (
-          <button
-            key={index}
-            className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl w-full text-left transition-all duration-200 hover:bg-slate-800 hover:text-emerald-400 active:scale-95 group"
+      <nav className="flex w-full flex-col gap-2">
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.name}
+            to={item.path}
+            end={item.path === "/dashboard"}
+            className={({ isActive }) =>
+              `group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium transition-all duration-200 ${
+                isActive
+                  ? "bg-emerald-500/15 text-emerald-400 shadow-sm"
+                  : "text-slate-300 hover:bg-slate-800 hover:text-emerald-400"
+              }`
+            }
           >
-            <span className="text-lg group-hover:animate-bounce">{item.icon}</span>
-            {/* Agar sidebar open hai tabhi text dikhao, nahi toh sirf icon dikhega (Desktop par) */}
+            <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-emerald-400 transition-all opacity-0 group-[.active]:opacity-100" />
+            <span className="text-lg transition-transform duration-200 group-hover:scale-110">{item.icon}</span>
             <span className={`${!isSidebarOpen && "md:hidden"}`}>{item.name}</span>
-          </button>
+          </NavLink>
         ))}
       </nav>
     </aside>
